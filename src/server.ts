@@ -1,16 +1,17 @@
 import mongoose from 'mongoose'
 import app from './app'
 import { config } from './config'
+import { errorLogger, infoLogger } from './shared/logger'
 
 async function dbConnect() {
   try {
     await mongoose.connect(config.database_url as string)
-    console.log('Database Connected')
+    infoLogger.info('Database Connected')
     app.listen(config.port, () => {
-      console.log('server running on port', config.port)
+      infoLogger.info('server running on port', config.port)
     })
   } catch (error) {
-    console.log('Database disconnected')
+    errorLogger.error('Database disconnected')
   }
 }
 dbConnect()

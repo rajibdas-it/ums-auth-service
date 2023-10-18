@@ -1,0 +1,6 @@
+{
+  message: 'Database disconnected',
+  level: 'error',
+  label: 'right meow!',
+  timestamp: '2023-10-18T08:42:16.967Z'
+}

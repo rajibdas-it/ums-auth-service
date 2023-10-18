@@ -1,0 +1,12 @@
+{
+  message: 'Database Connected',
+  level: 'info',
+  label: 'ums-auth-service',
+  timestamp: '18-10-2023, 3:10:17PM'
+}
+{
+  level: 'info',
+  message: 'server running on port',
+  label: 'ums-auth-service',
+  timestamp: '18-10-2023, 3:10:17PM'
+}
