@@ -8,10 +8,10 @@ async function dbConnect() {
     await mongoose.connect(config.database_url as string)
     infoLogger.info('Database Connected')
     app.listen(config.port, () => {
-      infoLogger.info('server running on port', config.port)
+      infoLogger.info('Server Running On Port', config.port)
     })
   } catch (error) {
-    errorLogger.error('Database disconnected')
+    errorLogger.error('Failed To Connect Database')
   }
 }
 dbConnect()
