@@ -8,6 +8,7 @@ import { ErrorRequestHandler } from 'express';
 import { config } from '../../config';
 import ApiError from '../../errors/ApiError';
 import handleValidationError from '../../errors/handleValidationError';
+import handleZodError from '../../errors/handleZodError';
 import { IGenericErrorMessages } from '../../interfaces/ErrorMessages';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
@@ -25,6 +26,11 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessage;
+  } else if (error.name === 'ZodError') {
+    const simplifiedError = handleZodError(error);
+    (statusCode = simplifiedError.statusCode),
+      (message = simplifiedError.message),
+      (errorMessages = simplifiedError.errorMessage);
   } else if (error instanceof Error) {
     message = error?.message;
     errorMessages = error?.message
