@@ -1,24 +1,24 @@
 /* eslint-disable no-unused-vars */
-import cors from 'cors'
-import express, { Application } from 'express'
-import globalErrorHandler from './app/middlewares/globalErrorHandler'
-import { userRoutes } from './app/modules/user/user.route'
+import cors from 'cors';
+import express, { Application } from 'express';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import { userRoutes } from './app/modules/user/user.route';
 
-const app: Application = express()
+const app: Application = express();
 
-app.use(cors())
+app.use(cors());
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //console.log(app.get('env'))
 //console.log(process.env)
-app.use('/user', userRoutes)
+app.use('/api/v1/user', userRoutes);
 
-app.get('/', (req, res, next) => {
-  next('error testing')
-})
+// app.get('/', (req, res, next) => {
+//   throw new ApiError(500, 'api not defined');
+// });
 
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
 
-export default app
+export default app;
