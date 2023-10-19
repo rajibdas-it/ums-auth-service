@@ -15,8 +15,15 @@ app.use(express.urlencoded({ extended: true }));
 //console.log(process.env)
 app.use('/api/v1/user', userRoutes);
 
+//unhandle rejection testing purpose
+
+// app.get('/', async (req, res, next) => {
+//   Promise.reject(new Error('Un'));
+// });
+
+//uncaught rejection testing purose
 // app.get('/', (req, res, next) => {
-//   throw new ApiError(500, 'api not defined');
+//   throw new Error('testing error logger');
 // });
 
 app.use(globalErrorHandler);
