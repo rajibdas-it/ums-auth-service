@@ -2,8 +2,7 @@
 import cors from 'cors';
 import express, { Application } from 'express';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
-import { semesterRoutes } from './app/modules/academicSemester/academicSemester.route';
-import { userRoutes } from './app/modules/user/user.route';
+import { ums_routes } from './app/routes';
 
 const app: Application = express();
 
@@ -14,8 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //console.log(app.get('env'))
 //console.log(process.env)
-app.use('/api/v1/user', userRoutes);
-app.use('/api/v1/academic-semester', semesterRoutes);
+app.use('/api/v1/', ums_routes);
 
 //unhandle rejection testing purpose
 
