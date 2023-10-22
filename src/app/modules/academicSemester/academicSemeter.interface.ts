@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 
 export type IAcademicSemester = {
   title: string;
-  year: number;
+  year: string;
   code: string;
   startMonth: string;
   endMonth: string;
