@@ -14,6 +14,30 @@ const createSemester = async (
   return result;
 };
 
+type IPaginationOptions = {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+};
+const getAllSemester = async (options: IPaginationOptions) => {
+  const { page, limit, sortBy, sortOrder } = options;
+  const skip = (page - 1) * limit;
+  const result = await AcademicSemester.find({}).limit(limit).skip(skip);
+  const total = await AcademicSemester.count();
+
+  const meta = {
+    page,
+    limit,
+    total,
+  };
+  return {
+    meta,
+    result,
+  };
+};
+
 export const academicSemesterServices = {
   createSemester,
+  getAllSemester,
 };
