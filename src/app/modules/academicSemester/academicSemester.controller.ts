@@ -28,15 +28,15 @@ const getAllSemester = catchAsync(async (req, res) => {
   // };
 
   const paginationOptions = pick(req.query, paginationsFields);
-  console.log(paginationOptions);
+  // console.log(paginationOptions);
   const result =
     await academicSemesterServices.getAllSemester(paginationOptions);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Retrived ',
+    message: 'Semester Retrived Successfully',
     meta: result.meta,
-    data: result.result,
+    data: result.data,
   });
 });
 
