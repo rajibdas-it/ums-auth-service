@@ -6,14 +6,17 @@
 
 const myObj = { page: '1', limit: '5', sortBy: 'year', sortOrder: 'desc' }
 
-const keys = ['page', 'limit', 'sortBy', 'sortOrder']
+// const keys = ['page', 'limit', 'sortBy', 'sortOrder']
 
 const myOutPut = {}
 
-for (const key of keys) {
-    if (myObj && Object.hasOwnProperty.call(myObj, key)) {
-        myOutPut[key] = myObj[key]
-    }
-}
+// for (const key of keys) {
+//     if (myObj && Object.hasOwnProperty.call(myObj, key)) {
+//         myOutPut[key] = myObj[key]
+//     }
+// }
 
+if (myObj.sortBy && myObj.sortOrder) {
+    myOutPut[myObj.sortBy] = myObj.sortOrder
+}
 console.log(myOutPut);
