@@ -26,11 +26,15 @@ const getAllSemester = catchAsync(async (req, res) => {
   //   sortBy: req.query.sortBy,
   //   sortOrder: req.query.sortOrder,
   // };
-
+  const filters = pick(req.query, ['searchTerm', 'title', 'code', 'year']);
+  // console.log(filters);
   const paginationOptions = pick(req.query, paginationsFields);
+
   // console.log(paginationOptions);
-  const result =
-    await academicSemesterServices.getAllSemester(paginationOptions);
+  const result = await academicSemesterServices.getAllSemester(
+    filters,
+    paginationOptions,
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

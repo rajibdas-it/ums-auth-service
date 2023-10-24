@@ -13,6 +13,9 @@ export type AcademicSemesterModel = Model<
   Record<string, unknown>
 >;
 
+export type IAcademicSemesterFilters = {
+  searchTerm: string;
+};
 export type IAcademicSemesterTitle = 'Autumn' | 'Summer' | 'Fall';
 export type IAcademicSemesterCode = '01' | '02' | '03';
 export type IMonths = string[];
