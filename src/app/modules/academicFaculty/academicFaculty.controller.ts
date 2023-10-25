@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { paginationsFields } from '../../../constants/paginations';
 import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
 import { academicFacultyService } from './academicFaculty.service';
 
@@ -20,7 +22,10 @@ const createAcademicFaculty = catchAsync(
 );
 
 const getAllAcademicFaculty = catchAsync(async (req, res) => {
-  const result = await academicFacultyService.getAllAcademicFaculty();
+  const paginationOptions = pick(req.query, paginationsFields);
+  // console.log(paginationOptions);
+  const result =
+    await academicFacultyService.getAllAcademicFaculty(paginationOptions);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -28,6 +33,7 @@ const getAllAcademicFaculty = catchAsync(async (req, res) => {
     message: 'all academic faculty retrived successfully',
     meta: result.meta,
     data: result.data,
+    // data: result,
   });
 });
 
