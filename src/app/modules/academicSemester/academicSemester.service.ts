@@ -28,6 +28,7 @@ const getAllSemester = async (
   const { searchTerm, ...filterData } = filters;
 
   const andCondition = [];
+
   const academicSemesterSearchableFields = ['title', 'code', 'year'];
   if (searchTerm) {
     andCondition.push({
@@ -36,6 +37,14 @@ const getAllSemester = async (
           $regex: searchTerm,
           $options: 'i',
         },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length) {
+    andCondition.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
       })),
     });
   }
@@ -67,11 +76,14 @@ const getAllSemester = async (
   const { page, limit, skip, sortBy, sortOrder } =
     calculatePagination(paginationOptions);
   const sortConditions: { [key: string]: SortOrder } = {};
+
   if (sortBy && sortOrder) {
     sortConditions[sortBy] = sortOrder;
   }
 
-  const result = await AcademicSemester.find({ $and: andCondition })
+  const whereConditions = andCondition.length > 0 ? { $and: andCondition } : {};
+
+  const result = await AcademicSemester.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);

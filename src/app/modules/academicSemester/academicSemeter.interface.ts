@@ -14,7 +14,7 @@ export type AcademicSemesterModel = Model<
 >;
 
 export type IAcademicSemesterFilters = {
-  searchTerm: string;
+  searchTerm?: string;
 };
 export type IAcademicSemesterTitle = 'Autumn' | 'Summer' | 'Fall';
 export type IAcademicSemesterCode = '01' | '02' | '03';
