@@ -10,6 +10,16 @@ router.post(
   validateRequest(academicFacultyZodSchema.createAcademicFacultyZodSchema),
   academicFacultyController.createAcademicFaculty,
 );
+router.get('/:id', academicFacultyController.getSingleAcademicFaculty);
+router.patch(
+  '/update-academic-faculty/:id',
+  validateRequest(academicFacultyZodSchema.updateAcademicFacultyZodSchema),
+  academicFacultyController.updateAcademicFaculty,
+);
+router.delete(
+  '/delete-academic-faculty/:id',
+  academicFacultyController.deleteAcademicFaculty,
+);
 router.get('/', academicFacultyController.getAllAcademicFaculty);
 
 export const academicFacultyRoutes = router;
