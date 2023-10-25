@@ -99,7 +99,48 @@ const getAllSemester = async (
   };
 };
 
+const getSingleSemeter = async (
+  id: string,
+): Promise<IAcademicSemester | null> => {
+  const result = await AcademicSemester.findById({ _id: id });
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Semester dose not exists');
+  }
+  return result;
+};
+
+const updateSemester = async (
+  id: string,
+  payload: Partial<IAcademicSemester>,
+) => {
+  if (
+    payload.title &&
+    payload.code &&
+    academicSemesterMapper[payload.title] != payload?.code
+  ) {
+    throw new ApiError(
+      httpStatus.CONFLICT,
+      'Semester title and code not matched',
+    );
+  }
+  const result = await AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
+const deleteSemester = async (id: string) => {
+  const result = await AcademicSemester.findByIdAndDelete({ _id: id });
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Semester does not exists');
+  }
+  return result;
+};
+
 export const academicSemesterServices = {
   createSemester,
   getAllSemester,
+  getSingleSemeter,
+  updateSemester,
+  deleteSemester,
 };
