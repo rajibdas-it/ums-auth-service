@@ -6,6 +6,9 @@ const createAcademicFaculty = async (payload: IAcademicFaculty) => {
   return result;
 };
 
+const getAllAcademicFaculty = async (filters, paginationOptions) => {};
+
 export const academicFacultyService = {
   createAcademicFaculty,
+  getAllAcademicFaculty,
 };

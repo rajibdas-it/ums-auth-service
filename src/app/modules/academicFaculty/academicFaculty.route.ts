@@ -10,5 +10,6 @@ router.post(
   validateRequest(academicFacultyZodSchema.createAcademicFacultyZodSchema),
   academicFacultyController.createAcademicFaculty,
 );
+router.get('/', academicFacultyController.getAllAcademicFaculty);
 
 export const academicFacultyRoutes = router;
