@@ -13,16 +13,16 @@ const findLastStudentId = async () => {
 };
 
 export const generateStudentId = async (
-  academicSemester: IAcademicSemester,
-) => {
+  academicSemester: IAcademicSemester | null,
+): Promise<string> => {
   const currentId =
     (await findLastStudentId()) || (0).toString().padStart(5, '0');
   let incrementId = (Number(currentId.substring(4)) + 1)
     .toString()
     .padStart(5, '0');
-  incrementId = `${academicSemester.year.substring(2)}${
-    academicSemester.code
-  }${incrementId}`;
+  incrementId = `${academicSemester?.year.substring(
+    2,
+  )}${academicSemester?.code}${incrementId}`;
   // console.log(incrementId);
   return incrementId;
 };
@@ -38,7 +38,7 @@ export const findLastFacultyId = async () => {
   return lastFaculty?.id;
 };
 
-export const generateFacultyId = async () => {
+export const generateFacultyId = async (): Promise<string> => {
   const currentId =
     (await findLastFacultyId()) || (0).toString().padStart(5, '0');
   // const splitingId = currentId.split('-');

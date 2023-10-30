@@ -6,9 +6,9 @@ const userSchema = new Schema<IUser, Record<string, unknown>>(
     id: { type: String, required: true, unique: true },
     role: { type: String, required: true },
     password: { type: String, required: true },
-    studentId: { type: Schema.Types.ObjectId, ref: 'Student' },
-    facultyId: { type: Schema.Types.ObjectId, ref: 'Faculty' },
-    adminId: { type: Schema.Types.ObjectId, ref: 'Admin' },
+    student: { type: Schema.Types.ObjectId, ref: 'Student' },
+    // facultyId: { type: Schema.Types.ObjectId, ref: 'Faculty' },
+    // adminId: { type: Schema.Types.ObjectId, ref: 'Admin' },
   },
   {
     timestamps: true,

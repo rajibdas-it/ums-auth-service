@@ -1,6 +1,8 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { bloodGroup, gender } from '../../../constants/user';
+import { IStudent, IStudentModel } from './student.interface';
 
-const studentSchema = new Schema(
+const studentSchema = new Schema<IStudent, IStudentModel>(
   {
     id: { type: String, required: true, unique: true },
     name: {
@@ -9,15 +11,16 @@ const studentSchema = new Schema(
         middleName: { type: String },
         lastName: { type: String, required: true },
       },
+      required: true,
     },
-    gender: { type: String, enum: ['male', 'female'], required: true },
+    gender: { type: String, enum: gender, required: true },
     dateOfBirth: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     contactNo: { type: String, required: true, unique: true },
     emergencyContactNo: { type: String, required: true },
     presentAddress: { type: String, required: true },
     parmanentAddress: { type: String, required: true },
-    bloodGroup: { type: String, enum: ['A+', 'B+', 'AB+', 'AB-', 'A-', 'B-'] },
+    bloodGroup: { type: String, enum: bloodGroup, required: true },
     guardian: {
       type: {
         fatherName: { type: String, required: true },
@@ -27,6 +30,7 @@ const studentSchema = new Schema(
         motherOccupation: { type: String, required: true },
         motherContactNo: { type: String, required: true },
       },
+      required: true,
     },
     localGuardian: {
       type: {
@@ -34,6 +38,23 @@ const studentSchema = new Schema(
         guardianOccupation: { type: String, required: true },
         guardianContactNo: { type: String, required: true },
       },
+      required: true,
+    },
+    profileImage: { type: String },
+    academicSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
+      required: true,
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+      required: true,
+    },
+    academicFaculty: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicFaculty',
+      required: true,
     },
   },
   {
@@ -43,3 +64,7 @@ const studentSchema = new Schema(
     },
   },
 );
+
+const Student = model<IStudent, IStudentModel>('Student', studentSchema);
+
+export default Student;
