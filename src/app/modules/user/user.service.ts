@@ -2,7 +2,6 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import { config } from '../../../config';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import AcademicSemester from '../academicSemester/academicSemeter.model';
 import { IFaculty } from '../faculty/faculty.interface';
@@ -67,40 +66,50 @@ const createStudent = async (student: IStudent, user: IUser) => {
 };
 
 const createFaculty = async (faculty: IFaculty, user: IUser) => {
-  user.role = ENUM_USER_ROLE.FACULTY;
   if (!user.password) {
     user.password = config.default_faculty_password as string;
   }
+
+  user.role = 'faculty';
   let newFacultyData = null;
   const session = await mongoose.startSession();
   try {
-    session.startTransaction();
+    await session.startTransaction();
     const id = await generateFacultyId();
+
     user.id = id;
     faculty.id = id;
 
     const newFaculty = await Faculty.create([faculty], { session });
+
     if (!newFaculty.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create faculty');
     }
 
-    user.facultyId = newFaculty[0]._id;
+    user.faculty = newFaculty[0]._id;
 
     const newUser = await User.create([user], { session });
+
     if (!newUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create new user');
     }
 
     newFacultyData = newUser[0];
+    await session.commitTransaction();
+    await session.endSession();
   } catch (error) {
-    session.abortTransaction();
-    session.endSession();
+    await session.abortTransaction();
+    await session.endSession();
     throw error;
   }
-  newFacultyData = await User.findOne({ id: newFacultyData.id }).populate({
-    path: 'Faculty',
-    populate: [{ path: 'academicDepartment' }, { path: 'academicFaculty' }],
-  });
+
+  if (newFacultyData) {
+    newFacultyData = await User.findOne({ id: newFacultyData.id }).populate({
+      path: 'faculty',
+      populate: [{ path: 'academicFaculty' }, { path: 'academicDepartment' }],
+    });
+  }
+
   return newFacultyData;
 };
 

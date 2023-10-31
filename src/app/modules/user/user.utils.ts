@@ -23,7 +23,7 @@ export const generateStudentId = async (
   incrementId = `${academicSemester?.year.substring(
     2,
   )}${academicSemester?.code}${incrementId}`;
-  // console.log(incrementId);
+
   return incrementId;
 };
 
@@ -34,7 +34,7 @@ export const findLastFacultyId = async () => {
   )
     .sort({ createdAt: -1 })
     .lean();
-  // console.log(lastFaculty?.id);
+
   return lastFaculty?.id;
 };
 

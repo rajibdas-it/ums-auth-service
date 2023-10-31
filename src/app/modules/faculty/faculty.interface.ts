@@ -33,3 +33,13 @@ export type IFaculty = {
 };
 
 export type IFacultyModel = Model<IFaculty, Record<string, unknown>>;
+
+export type IFacultyFilters = {
+  searchTerm?: string;
+  id?: string;
+  gender?: string;
+  email?: string;
+  contactNo?: string;
+  emergencyContactNo?: string;
+  bloodGroup?: string;
+};

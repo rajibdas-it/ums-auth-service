@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-expressions */
-import { errorLogger } from './../../shared/logger';
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -12,6 +11,7 @@ import handleCastError from '../../errors/handleCastError';
 import handleValidationError from '../../errors/handleValidationError';
 import handleZodError from '../../errors/handleZodError';
 import { IGenericErrorMessages } from '../../interfaces/ErrorMessages';
+import { errorLogger } from '../../shared/logger';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   //   res.status(400).json({ error: error })
