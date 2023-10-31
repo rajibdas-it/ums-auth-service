@@ -10,7 +10,7 @@ router.patch(
   validateRequest(studentValidation.updateStudentZodSchema),
   studentController.updateStudent,
 );
-router.delete('/:id');
+router.delete('/delete-student/:id', studentController.deleteStudent);
 router.get('/', studentController.getAllStudents);
 
 export const studentRoutes = router;

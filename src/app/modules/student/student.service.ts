@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
-import { SortOrder } from 'mongoose';
+import mongoose, { SortOrder } from 'mongoose';
 import ApiError from '../../../errors/ApiError';
 import calculatePagination from '../../../helper/calculatePagination';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
+import User from '../user/user.model';
 import { studentSearchableFields } from './student.constant';
 import { IStudent, IStudentFilters } from './student.interface';
 import Student from './student.model';
@@ -113,8 +114,37 @@ const updateStudent = async (
   return result;
 };
 
+const deleteStudent = async (id: string) => {
+  const isExist = await Student.findOne({ id });
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found');
+  }
+  const session = await mongoose.startSession();
+  //   let deleteStudentData = null;
+  try {
+    session.startTransaction();
+
+    const student = await Student.findOneAndDelete({ id }, { session });
+
+    if (!student) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create student');
+    }
+    await User.deleteOne({ id }, { session });
+
+    session.commitTransaction();
+    session.endSession();
+
+    return student;
+  } catch (error) {
+    session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
+};
+
 export const studentService = {
   getAllStudents,
   getSingleStudent,
   updateStudent,
+  deleteStudent,
 };
