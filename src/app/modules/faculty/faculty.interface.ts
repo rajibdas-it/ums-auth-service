@@ -5,7 +5,7 @@ import { IAcademicDepartment } from '../department/department.interface';
 
 type IFacultyName = {
   firstName: string;
-  midleName?: string;
+  middleName?: string;
   lastName: string;
 };
 

@@ -10,7 +10,7 @@ const facultySchema = new Schema<IFaculty, IFacultyModel>(
       required: true,
       type: {
         firstName: { type: String, required: true },
-        midleName: { type: String },
+        middleName: { type: String },
         lastName: { type: String, required: true },
       },
     },

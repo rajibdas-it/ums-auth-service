@@ -22,6 +22,42 @@ const getAllFaculties = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleFaculty = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await facultiesService.getSingleFaculty(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Faculty data retrived',
+    data: result,
+  });
+});
+const updateFaculty = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const updateData = req.body;
+  const result = await facultiesService.updateFaculty(id, updateData);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All faculties data retrived',
+    data: result,
+  });
+});
+const deleteFaculty = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await facultiesService.deleteFaculty(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Delete faculty successfully',
+    data: result,
+  });
+});
+
 export const facultiesController = {
   getAllFaculties,
+  getSingleFaculty,
+  updateFaculty,
+  deleteFaculty,
 };
