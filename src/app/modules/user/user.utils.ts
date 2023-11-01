@@ -50,3 +50,17 @@ export const generateFacultyId = async (): Promise<string> => {
   incrementId = `F-${incrementId}`;
   return incrementId;
 };
+
+export const findLastAdminId = async () => {
+  const result = await User.findOne({ role: 'admin' })
+    .sort({ createdAt: -1 })
+    .lean();
+  return result?.id ? result?.id.substring(2) : null;
+};
+
+export const generateAdminId = async () => {
+  const currentId =
+    (await findLastAdminId()) || (0).toString().padStart(5, '0');
+  let incrementedId = (Number(currentId) + 1).toString().padStart(5, '0');
+  return (incrementedId = `A-${incrementedId}`);
+};
