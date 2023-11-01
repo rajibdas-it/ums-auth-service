@@ -49,7 +49,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 //   code: '01',
 // };
 // const testId = async () => {
-//   const newId = await generateFacultyId();
+//   const newId = await generateAdminId();
 //   console.log(newId);
 // };
 // testId();

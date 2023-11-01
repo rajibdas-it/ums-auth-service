@@ -2,7 +2,7 @@ import express from 'express';
 import { departmentRoutes } from '../modules/academicDepartment/department.route';
 import { academicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.route';
 import { semesterRoutes } from '../modules/academicSemester/academicSemester.route';
-import { facultyRoutes } from '../modules/faculty/faculty.route';
+import { adminRoutes } from '../modules/admin/admin.route';
 import { managementDepartmentRoutes } from '../modules/managementDepartment/managementDepartment.route';
 import { studentRoutes } from '../modules/student/student.route';
 import { userRoutes } from '../modules/user/user.route';
@@ -19,7 +19,7 @@ const routes = [
     routeName: managementDepartmentRoutes,
   },
   { pathName: '/student/', routeName: studentRoutes },
-  { pathName: '/faculty/', routeName: facultyRoutes },
+  { pathName: '/admin/', routeName: adminRoutes },
 ];
 
 routes.forEach(route => {
