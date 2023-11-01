@@ -1,7 +1,7 @@
 import { Model, Types } from 'mongoose';
 import { IBloodGroup, IGender } from '../../../interfaces/user';
+import { IAcademicDepartment } from '../academicDepartment/department.interface';
 import { IAcademicFaculty } from '../academicFaculty/academicFaculty.interface';
-import { IAcademicDepartment } from '../department/department.interface';
 
 type IFacultyName = {
   firstName: string;

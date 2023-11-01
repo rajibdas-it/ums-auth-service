@@ -1,7 +1,7 @@
 import express from 'express';
+import { departmentRoutes } from '../modules/academicDepartment/department.route';
 import { academicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.route';
 import { semesterRoutes } from '../modules/academicSemester/academicSemester.route';
-import { departmentRoutes } from '../modules/department/department.route';
 import { facultyRoutes } from '../modules/faculty/faculty.route';
 import { managementDepartmentRoutes } from '../modules/managementDepartment/managementDepartment.route';
 import { studentRoutes } from '../modules/student/student.route';
