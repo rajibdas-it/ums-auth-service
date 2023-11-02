@@ -11,14 +11,13 @@ import handleCastError from '../../errors/handleCastError';
 import handleValidationError from '../../errors/handleValidationError';
 import handleZodError from '../../errors/handleZodError';
 import { IGenericErrorMessages } from '../../interfaces/ErrorMessages';
-import { errorLogger } from '../../shared/logger';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   //   res.status(400).json({ error: error })
   //upor e next ke rakhtei hobe. noile response shundor vabe dey na.
   config.node_env === 'development'
     ? console.log('Global Error Handler', error)
-    : errorLogger.error('Global ErrorHandler', error);
+    : console.log('Global ErrorHandler', error);
 
   let statusCode = 500;
   let message = 'something went wrong';

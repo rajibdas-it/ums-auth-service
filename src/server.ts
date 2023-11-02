@@ -2,12 +2,12 @@ import { Server } from 'http';
 import mongoose from 'mongoose';
 import app from './app';
 import { config } from './config';
-import { errorLogger, infoLogger } from './shared/logger';
+import { infoLogger } from './shared/logger';
 
 let server: Server;
 
 process.on('uncaughtException', error => {
-  errorLogger.error('uncaught exception is dectected', error);
+  console.log('uncaught exception is dectected', error);
   process.exit(1);
 });
 
@@ -19,13 +19,13 @@ async function dbConnect() {
       infoLogger.info('Server Running On Port', config.port);
     });
   } catch (error) {
-    errorLogger.error('Failed To Connect Database');
+    console.log('Failed To Connect Database');
   }
 
   process.on('unhandledRejection', error => {
     if (server) {
       server.close(() => {
-        errorLogger.error(error);
+        console.log(error);
         process.exit(1);
       });
     } else {
