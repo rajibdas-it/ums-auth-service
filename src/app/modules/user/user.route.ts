@@ -17,11 +17,13 @@ router.post(
 router.post(
   '/create-faculty',
   validateRequest(userValidation.createFacultyZodSchema),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   userController.createFaculty,
 );
 router.post(
   '/create-admin',
   validateRequest(userValidation.createAdminZodSchema),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   userController.createAdmin,
 );
 

@@ -10,16 +10,23 @@ const router = express.Router();
 router.post(
   '/create-academic-faculty',
   validateRequest(academicFacultyZodSchema.createAcademicFacultyZodSchema),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   academicFacultyController.createAcademicFaculty,
 );
-router.get('/:id', academicFacultyController.getSingleAcademicFaculty);
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  academicFacultyController.getSingleAcademicFaculty,
+);
 router.patch(
   '/update-academic-faculty/:id',
   validateRequest(academicFacultyZodSchema.updateAcademicFacultyZodSchema),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   academicFacultyController.updateAcademicFaculty,
 );
 router.delete(
   '/delete-academic-faculty/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   academicFacultyController.deleteAcademicFaculty,
 );
 router.get(

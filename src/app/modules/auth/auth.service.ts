@@ -1,10 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import httpStatus from 'http-status';
-import { Secret } from 'jsonwebtoken';
+import { JwtPayload, Secret } from 'jsonwebtoken';
 import { config } from '../../../config';
 import ApiError from '../../../errors/ApiError';
 import { jwtHelpers } from '../../../helper/jwtHelpers';
 import User from '../user/user.model';
-import { ILoginUser, ILoginUserResponse } from './auth.interface';
+import {
+  IChangePassword,
+  ILoginUser,
+  ILoginUserResponse,
+} from './auth.interface';
+
+import bcrypt from 'bcrypt';
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   const { id, password } = payload;
@@ -14,7 +21,7 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
 
-  const isPasswordMatched = User.isPasswordMatched(
+  const isPasswordMatched = await User.isPasswordMatched(
     password,
     isUserExist?.password as string,
   );
@@ -67,7 +74,45 @@ const refreshToken = async (token: string) => {
   };
 };
 
+const changePassword = async (
+  user: JwtPayload | null,
+  payload: IChangePassword,
+): Promise<void> => {
+  const { oldPassword, newPassword } = payload;
+  const isUserExist = await User.isUserExist(user?.id);
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
+
+  const isPasswordMatched = await User.isPasswordMatched(
+    oldPassword,
+    isUserExist?.password as string,
+  );
+
+  if (!isPasswordMatched) {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'Old passwrod does not matched',
+    );
+  }
+
+  const newHashedPassword = await bcrypt.hash(
+    newPassword,
+    Number(config.bcrypt_salt_round),
+  );
+  const updatedData = {
+    needPasswordChange: false,
+    passwordChangeAt: new Date(),
+    password: newHashedPassword,
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const result = await User.findOneAndUpdate({ id: user?.id }, updatedData);
+};
+
 export const authService = {
   loginUser,
   refreshToken,
+  changePassword,
 };

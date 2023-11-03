@@ -12,8 +12,15 @@ const refreshTokenZodSchema = z.object({
     refreshToken: z.string({ required_error: 'Refresh token is required' }),
   }),
 });
+const changlePasswordZodSchema = z.object({
+  body: z.object({
+    oldPassword: z.string({ required_error: 'Old password is required' }),
+    newPassword: z.string({ required_error: 'New password is requried' }),
+  }),
+});
 
 export const authZodSchema = {
   loginZodSchema,
   refreshTokenZodSchema,
+  changlePasswordZodSchema,
 };
