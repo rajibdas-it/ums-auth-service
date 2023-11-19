@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import { Server } from 'http';
 import mongoose from 'mongoose';
 import app from './app';
 import { config } from './config';
 import { infoLogger } from './shared/logger';
+import { RedisClient } from './shared/redis';
 
 let server: Server;
 
@@ -13,6 +15,7 @@ process.on('uncaughtException', error => {
 
 async function dbConnect() {
   try {
+    await RedisClient.connect();
     await mongoose.connect(config.database_url as string);
     infoLogger.info('Database Connected');
     server = app.listen(config.port, () => {

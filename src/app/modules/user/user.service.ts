@@ -32,7 +32,7 @@ const createStudent = async (student: IStudent, user: IUser) => {
   const session = await mongoose.startSession();
 
   try {
-    session.startTransaction();
+    await session.startTransaction();
     const id = await generateStudentId(academicSemester);
     user.id = id;
     student.id = id;
