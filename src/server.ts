@@ -19,7 +19,7 @@ async function dbConnect() {
     await mongoose.connect(config.database_url as string);
     infoLogger.info('Database Connected');
     server = app.listen(config.port, () => {
-      infoLogger.info('Server Running On Port', config.port);
+      infoLogger.info(`Server Running On Port ${config.port}`);
     });
   } catch (error) {
     console.log('Failed To Connect Database');
