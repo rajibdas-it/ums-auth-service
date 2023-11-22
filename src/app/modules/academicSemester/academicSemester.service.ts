@@ -166,6 +166,10 @@ const updateSemesterFromEvent = async (
   );
 };
 
+const deleteSemesterFromEvent = async (syncId: string) => {
+  await AcademicSemester.findOneAndDelete({ syncId });
+};
+
 export const academicSemesterServices = {
   createSemester,
   getAllSemester,
@@ -174,4 +178,5 @@ export const academicSemesterServices = {
   deleteSemester,
   createSemesterFromEvent,
   updateSemesterFromEvent,
+  deleteSemesterFromEvent,
 };
