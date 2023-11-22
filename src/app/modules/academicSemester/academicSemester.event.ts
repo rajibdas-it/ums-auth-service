@@ -22,7 +22,6 @@ const AcademicSemesterEvents = () => {
   RedisClient.subscribe(Event_Academic_Semester_Deleted, async (e: string) => {
     const data = JSON.parse(e);
     await academicSemesterServices.deleteSemesterFromEvent(data.id);
-    console.log('Deleted Data', data);
   });
 };
 
