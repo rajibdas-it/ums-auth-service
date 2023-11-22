@@ -6,6 +6,7 @@ export type IAcademicSemester = {
   code: string;
   startMonth: string;
   endMonth: string;
+  syncId: string;
 };
 
 export type AcademicSemesterModel = Model<
@@ -19,16 +20,12 @@ export type IAcademicSemesterFilters = {
 export type IAcademicSemesterTitle = 'Autumn' | 'Summer' | 'Fall';
 export type IAcademicSemesterCode = '01' | '02' | '03';
 export type IMonths = string[];
-// export type IMonths =
-//   | 'January'
-//   | 'February'
-//   | 'March'
-//   | 'April'
-//   | 'May'
-//   | 'June'
-//   | 'July'
-//   | 'August'
-//   | 'September'
-//   | 'October'
-//   | 'November'
-//   | 'December';
+
+export type IAcademicSemesterCreatedEvent = {
+  title: string;
+  year: string;
+  code: string;
+  startMonth: string;
+  endMonth: string;
+  id: string;
+};

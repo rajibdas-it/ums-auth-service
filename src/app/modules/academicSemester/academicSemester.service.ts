@@ -7,6 +7,7 @@ import { IPaginationOptions } from '../../../interfaces/pagination';
 import { academicSemesterMapper } from './academicSemeter.constant';
 import {
   IAcademicSemester,
+  IAcademicSemesterCreatedEvent,
   IAcademicSemesterFilters,
 } from './academicSemeter.interface';
 import AcademicSemester from './academicSemeter.model';
@@ -137,10 +138,40 @@ const deleteSemester = async (id: string) => {
   return result;
 };
 
+const createSemesterFromEvent = async (e: IAcademicSemesterCreatedEvent) => {
+  await AcademicSemester.create({
+    title: e.title,
+    year: e.year,
+    code: e.code,
+    startMonth: e.startMonth,
+    endMonth: e.endMonth,
+    syncId: e?.id,
+  });
+};
+
+const updateSemesterFromEvent = async (
+  e: Partial<IAcademicSemesterCreatedEvent>,
+): Promise<void> => {
+  await AcademicSemester.findOneAndUpdate(
+    { syncId: e.id },
+    {
+      $set: {
+        title: e.title,
+        year: e.year,
+        code: e.code,
+        startMonth: e.startMonth,
+        endMonth: e.endMonth,
+      },
+    },
+  );
+};
+
 export const academicSemesterServices = {
   createSemester,
   getAllSemester,
   getSingleSemeter,
   updateSemester,
   deleteSemester,
+  createSemesterFromEvent,
+  updateSemesterFromEvent,
 };
